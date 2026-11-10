@@ -2,17 +2,20 @@
 declare(strict_types=1);
 
 // ---------- Settings (Laragon defaults) ----------
-const DB_HOST    = '127.0.0.1';
-const DB_NAME    = 'cv_builder_db';
-const DB_USER    = 'root';
-const DB_PASS    = '';              // Laragon's MySQL root has no password by default
-const DB_CHARSET = 'utf8mb4';
+define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
+define('DB_NAME', getenv('DB_NAME') ?: 'cv_builder_db');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: ''); // Laragon's MySQL root has no password by default
+define('DB_CHARSET', getenv('DB_CHARSET') ?: 'utf8mb4');
 
 // Frontend origins allowed to call this API (CORS). Add your production URL here.
-const ALLOWED_ORIGINS = ['http://localhost:5173', 'http://127.0.0.1:5173'];
+define('ALLOWED_ORIGINS', array_values(array_filter(array_map(
+    'trim',
+    explode(',', getenv('ALLOWED_ORIGINS') ?: 'http://localhost:5173,http://127.0.0.1:5173')
+))));
 
-const TOKEN_TTL_DAYS = 30;
-const DEBUG          = true;        // set to false in production
+define('TOKEN_TTL_DAYS', 30);
+define('DEBUG', filter_var(getenv('DEBUG') ?: 'true', FILTER_VALIDATE_BOOLEAN));
 
 date_default_timezone_set('Asia/Phnom_Penh');
 
