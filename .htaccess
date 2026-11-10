@@ -1,0 +1,4 @@
+# Let PHP see the Authorization header under Apache (Laragon default)
+RewriteEngine On
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
